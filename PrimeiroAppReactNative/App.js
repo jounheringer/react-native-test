@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 
 export default function App() {
   // Com a funcao useState a gnt cria uma variavel cosntante com setter e getter
@@ -34,11 +34,14 @@ export default function App() {
           title='Add goal'
           onPress={addGoalHandler}/>
       </View>
+      {/* ScrollView n tem um limite explicito ent vc precisa d uma View para limitar o ScrollView */}
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => 
-        // Todo componente deve ter uma key unica, n fazer isso n leva a um erro mas pode afetar trabalhos futuros
-          <Text style={styles.goalText} key={count++}>{goal}</Text>)
-        }
+        <ScrollView>
+          {courseGoals.map((goal) =>
+          // Todo componente deve ter uma key unica, n fazer isso n leva a um erro mas pode afetar trabalhos futuros
+            <Text style={styles.goalText} key={'goalItem' + count++}>{goal}</Text>)
+          }
+        </ScrollView>
       </View>
     </View>
   );
@@ -72,7 +75,6 @@ const styles = StyleSheet.create({
     // O atributo Flex funciona como uma forma de hierarquia dos style objetos
     // Ex: A view main pode ter 2 Views como filho se o primeiro tiver flex 1 ele vai ocupar menos espaco que uma View c flex 3
     flex: 4,
-
   },
   goalText: {
     margin: 8,
