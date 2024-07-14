@@ -12,6 +12,13 @@ export default function App() {
     // Dessa forma nos salvamos um texto dentro de uma array sem perder os textos anteriores
     setCourseGoals((currentCourseGoals) => [...currentCourseGoals, {text: enteredGoalText, id: Math.random().toString()}])
   };
+
+  function deleteGoalHandler(id) {
+    setCourseGoals(currentCourseGoals =>{
+      return currentCourseGoals.filter((goal) => goal.id !== id)
+    })
+  }
+
   return (
     // Por padrao View usa Flex box nos filhos
     <View style={styles.appContainer}>
@@ -21,7 +28,11 @@ export default function App() {
       {/* ScrollView n tem um limite explicito ent vc precisa d uma View para limitar o ScrollView */}
       <View style={styles.goalsContainer}>
         <FlatList data={courseGoals} renderItem={itemData => {
-          return <GoalItem text={itemData.item.text}/>;
+          return <GoalItem 
+            text={itemData.item.text} 
+            id={itemData.item.id}
+            onDeleteGoal={deleteGoalHandler}
+            />;
         }}
         keyExtractor={(item, index) => {
           return item.id;
