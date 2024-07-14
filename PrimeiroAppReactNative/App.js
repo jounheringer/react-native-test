@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   // Com a funcao useState a gnt cria uma variavel cosntante com setter e getter
   const [enteredGoalText, setEnteredGoalText] = useState('');
   const [courseGoals, setCourseGoals] = useState([])
-  var count = 0;
+  
 
   function goalInputHandler (enteredText) {
     setEnteredGoalText(enteredText)
@@ -13,7 +13,7 @@ export default function App() {
 
   function addGoalHandler () {
     // Dessa forma nos salvamos um texto dentro de uma array sem perder os textos anteriores
-    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, enteredGoalText])
+    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, {text: enteredGoalText, id: Math.random().toString()}])
   };
 
   return (
@@ -36,12 +36,15 @@ export default function App() {
       </View>
       {/* ScrollView n tem um limite explicito ent vc precisa d uma View para limitar o ScrollView */}
       <View style={styles.goalsContainer}>
-        <ScrollView>
-          {courseGoals.map((goal) =>
-          // Todo componente deve ter uma key unica, n fazer isso n leva a um erro mas pode afetar trabalhos futuros
-            <Text style={styles.goalText} key={'goalItem' + count++}>{goal}</Text>)
-          }
-        </ScrollView>
+        <FlatList data={courseGoals} renderItem={itemData => {
+          return (
+              <Text style={styles.goalText}>{itemData.item.text}</Text>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.id;
+        }}>
+        </FlatList>
       </View>
     </View>
   );
