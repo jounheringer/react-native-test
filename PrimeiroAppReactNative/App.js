@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
@@ -30,27 +31,30 @@ export default function App() {
   }
 
   return (
-    // Por padrao View usa Flex box nos filhos
-    <View style={styles.appContainer}>
-      <Button title="Add new Goal" color="#5e0acc" onPress={startAtGoalHandler}/>
-      {/* View: seria como criar uma tela dentro da tela do celular
-          View dentro de view: cria uma tela dentro da tela dentro da tela do celular */}
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAtGoalHandler}/>
-      {/* ScrollView n tem um limite explicito ent vc precisa d uma View para limitar o ScrollView */}
-      <View style={styles.goalsContainer}>
-        <FlatList data={courseGoals} renderItem={itemData => {
-          return <GoalItem 
-            text={itemData.item.text} 
-            id={itemData.item.id}
-            onDeleteGoal={deleteGoalHandler}
-            />;
-        }}
-        keyExtractor={(item, index) => {
-          return item.id;
-        }}>
-        </FlatList>
+    <>
+      <StatusBar style='auto'/>
+      {/* // Por padrao View usa Flex box nos filhos */}
+      <View style={styles.appContainer}>
+        <Button title="Add new Goal" color="#5e0acc" onPress={startAtGoalHandler}/>
+        {/* View: seria como criar uma tela dentro da tela do celular
+            View dentro de view: cria uma tela dentro da tela dentro da tela do celular */}
+        <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAtGoalHandler}/>
+        {/* ScrollView n tem um limite explicito ent vc precisa d uma View para limitar o ScrollView */}
+        <View style={styles.goalsContainer}>
+          <FlatList data={courseGoals} renderItem={itemData => {
+            return <GoalItem 
+              text={itemData.item.text} 
+              id={itemData.item.id}
+              onDeleteGoal={deleteGoalHandler}
+              />;
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}>
+          </FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
