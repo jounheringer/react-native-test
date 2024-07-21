@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextInput, Button, View, StyleSheet, Modal } from "react-native";
+import { TextInput, Button, View, StyleSheet, Modal, Image } from "react-native";
 
 function GoalInput(props) {
     const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -16,6 +16,7 @@ function GoalInput(props) {
     return(
     <Modal visible={props.visible} animationType="slide">
         <View style={styles.inputContainer}>
+            <Image source={require('../assets/image/goal.png')} style={styles.image}/>
             {/* Alguns componentes tem como atributo o style como o TextInput mas o Button por exemplo nao tem
             Ent uma das formas de alterar ele seria alterar o style da view em q ele esta */}
             <TextInput 
@@ -48,9 +49,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 16,
         marginBottom: 24,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
+        backgroundColor: "#311b6b"
       },
+    image: {
+        width: 100,
+        height: 100,
+        margin: 8
+    },
     textInput: {
         borderWidth: 1,
         borderColor: '#cccccc',
