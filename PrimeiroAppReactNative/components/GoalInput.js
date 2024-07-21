@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextInput, Button, View, StyleSheet } from "react-native";
+import { TextInput, Button, View, StyleSheet, Modal } from "react-native";
 
 function GoalInput(props) {
     const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -14,21 +14,28 @@ function GoalInput(props) {
     }
 
     return(
-    <View style={styles.inputContainer}>
-        {/* Alguns componentes tem como atributo o style como o TextInput mas o Button por exemplo nao tem
-        Ent uma das formas de alterar ele seria alterar o style da view em q ele esta */}
-        <TextInput 
-            style={styles.textInput} 
-            placeholder='Text of goals' 
-            // Se vc n executar a funcao dentro do onChangeText (goalInputHandler()) 
-            // o react chama a funcao automaticamente apontando o texto como parametro fazendo a funcao ser executada em tempo real
-            onChangeText={goalInputHandler}
-            value={enteredGoalText}
-            /> 
-        <Button 
-            title='Add goal'
-            onPress={addGoalHandler}/>
-    </View>
+    <Modal visible={props.visible} animationType="slide">
+        <View style={styles.inputContainer}>
+            {/* Alguns componentes tem como atributo o style como o TextInput mas o Button por exemplo nao tem
+            Ent uma das formas de alterar ele seria alterar o style da view em q ele esta */}
+            <TextInput 
+                style={styles.textInput} 
+                placeholder='Text of goals' 
+                // Se vc n executar a funcao dentro do onChangeText (goalInputHandler()) 
+                // o react chama a funcao automaticamente apontando o texto como parametro fazendo a funcao ser executada em tempo real
+                onChangeText={goalInputHandler}
+                value={enteredGoalText}
+                /> 
+            <View style={styles.buttonContainer}>
+                <View style={styles.button}>
+                    <Button title='Add goal' onPress={addGoalHandler}/>
+                </View>
+                <View style={styles.button}>
+                    <Button title="Cancel" onPress={props.onCancel}/>
+                </View>
+            </View>
+        </View>
+    </Modal>
     );
 }
 
@@ -37,9 +44,9 @@ export default GoalInput;
 const styles = StyleSheet.create({
     inputContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
+        padding: 16,
         marginBottom: 24,
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc'
@@ -47,8 +54,16 @@ const styles = StyleSheet.create({
     textInput: {
         borderWidth: 1,
         borderColor: '#cccccc',
-        width: '70%',
+        width: '100%',
         marginRight: 8,
         padding: 8
       },
+    buttonContainer: {
+        marginTop: 16,
+        flexDirection: "row"
+    },
+    button: {
+        woth: "40%",
+        marginHorizontal: 8
+    }
 });
